@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/attitude">
+        <file>attitude/background-new.jpg</file>
+        <file>attitude/compassInstrumentAirplane.svg</file>
+        <file>attitude/crossHair.svg</file>
+        <file>attitude/grass-720x540-2.png</file>
+        <file>attitude/Quad.svg</file>
+        <file>attitude/web-camera-v2.png</file>
+        <file>attitude/Connect.svg</file>
+        <file>attitude/GeoFenceLight.svg</file>
+        <file>attitude/setup.svg</file>
+        <file>attitude/rollDialWhite.svg</file>
+        <file>attitude/wifi.png</file>
+        <file>attitude/HomeBlack.svg</file>
+        <file>attitude/rollPointerWhite.svg</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>attitude/HomeBlack.svg</file>
+        <file>attitude/PaperPlane.svg</file>
+        <file>attitude/camera.png</file>
+        <file>attitude/play-icon-128.png</file>
+        <file>attitude/Stop-Normal-Red-icon-128.png</file>
+        <file>attitude/web-camera-v2.png</file>
+        <file>attitude/1049232141.jpg</file>
+    </qresource>
+</RCC>

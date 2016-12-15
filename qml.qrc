@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/qmlImages">
+        <file>qmlImages/Airframe/AirframeUnknown.svg</file>
+        <file>qmlImages/PowerComponentIcon.png</file>
+        <file>qmlImages/RadioComponentIcon.png</file>
+        <file>qmlImages/SafetyComponentIcon.png</file>
+        <file>qmlImages/SensorsComponentIcon.png</file>
+        <file>qmlImages/FlightModesComponentIcon.png</file>
+        <file>qmlImages/Airframe/AirframeComponentIcon.png</file>
+        <file>qmlImages/Airframe/HexaRotorX.svg</file>
+        <file>qmlImages/Airframe/OctoRotorX.svg</file>
+        <file>qmlImages/Airframe/QuadRotorX.svg</file>
+        <file>qmlImages/Airframe/AirframeHexaRotorX.png</file>
+        <file>qmlImages/Airframe/AirframeOctoRotorX.png</file>
+        <file>qmlImages/Airframe/AirframeQuadRotorX.png</file>
+        <file>qmlImages/TuningComponentIcon.png</file>
+        <file>qmlImages/VehicleDown.png</file>
+        <file>qmlImages/VehicleLeft.png</file>
+        <file>qmlImages/VehicleNoseDown.png</file>
+        <file>qmlImages/VehicleRight.png</file>
+        <file>qmlImages/VehicleTailDown.png</file>
+        <file>qmlImages/VehicleUpsideDown.png</file>
+    </qresource>
+</RCC>
