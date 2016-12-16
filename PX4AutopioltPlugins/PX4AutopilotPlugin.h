@@ -43,6 +43,8 @@ signals:
     void showMessage(const QString text);
     void showSetupView();
 
+    void setupCompleteStatus(QString componentName,bool setupComplete);
+
 public slots:
     void _parametersReadyPreCheck(bool noMissingParams);
     void _parametersReadyChanged(bool parametersReady);

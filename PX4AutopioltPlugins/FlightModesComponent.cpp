@@ -1,6 +1,6 @@
 #include "FlightModesComponent.h"
 #include "PX4AutopilotPlugin.h"
-
+#include <QDebug>
 
 FlightModesComponent::FlightModesComponent(PX4AutopilotPlugin* autopilot, QObject* parent)
     :VehicleComponent(autopilot,parent),
@@ -60,8 +60,8 @@ bool FlightModesComponent::setupComplete(void) const
     if(_autopilot->getParamFact(-1,"COM_RC_IN_MODE")->rawValue().toInt()==1) {
         return true;
     }
-    if(_autopilot->getParamFact(-1,"RC_MAP_SW")->rawValue().toInt() !=0 ||
-            (_autopilot->paramExists(-1,"RC_MAP_FLTMODE")&&_autopilot->getParamFact(-1,"RC_MAP_FLTMODE")!=0)) {
+    if(_autopilot->getParamFact(-1,"RC_MAP_MODE_SW")->rawValue().toInt() !=0 ||
+            (_autopilot->paramExists(-1,"RC_MAP_FLTMODE")&&_autopilot->getParamFact(-1,"RC_MAP_FLTMODE")->rawValue().toInt()!=0)) {
         return true;
     }
     return false;

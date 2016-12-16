@@ -112,9 +112,12 @@ void PX4AutopilotPlugin::_recalcSetupComplete(void)
         VehicleComponent* component = qobject_cast<VehicleComponent*>(qvariant_cast<QObject *>(componentVariant));
         Q_ASSERT(component);
 
-        if(!component->setupComplete()) {            
+
+        emit setupCompleteStatus(component->name(),component->setupComplete());
+
+        if(!component->setupComplete()) {
             newSetupComplete = false;
-            break;
+            //break;
         }
 
         //For test
