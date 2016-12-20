@@ -18,6 +18,12 @@
     <layout class="QGridLayout" name="gridLayout" columnstretch="1,5">
      <item row="0" column="0">
       <widget class="QGroupBox" name="groupBox">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>Setup</string>
        </property>
@@ -52,6 +58,9 @@
             <property name="text">
              <string>Summary</string>
             </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -78,6 +87,9 @@
             </property>
             <property name="text">
              <string>Firmware</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -113,6 +125,9 @@
              <iconset resource="qml.qrc">
               <normaloff>:/qmlImages/qmlImages/Airframe/AirframeComponentIcon.png</normaloff>:/qmlImages/qmlImages/Airframe/AirframeComponentIcon.png</iconset>
             </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -146,6 +161,9 @@
             <property name="icon">
              <iconset resource="qml.qrc">
               <normaloff>:/qmlImages/qmlImages/RadioComponentIcon.png</normaloff>:/qmlImages/qmlImages/RadioComponentIcon.png</iconset>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -181,6 +199,9 @@
              <iconset resource="qml.qrc">
               <normaloff>:/qmlImages/qmlImages/TuningComponentIcon.png</normaloff>:/qmlImages/qmlImages/TuningComponentIcon.png</iconset>
             </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -214,6 +235,9 @@
             <property name="icon">
              <iconset resource="qml.qrc">
               <normaloff>:/qmlImages/qmlImages/SensorsComponentIcon.png</normaloff>:/qmlImages/qmlImages/SensorsComponentIcon.png</iconset>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -249,6 +273,9 @@
              <iconset resource="qml.qrc">
               <normaloff>:/qmlImages/qmlImages/PowerComponentIcon.png</normaloff>:/qmlImages/qmlImages/PowerComponentIcon.png</iconset>
             </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -275,6 +302,9 @@
             </property>
             <property name="text">
              <string>Parameters</string>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

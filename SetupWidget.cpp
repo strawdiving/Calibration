@@ -1,20 +1,19 @@
 #include "SetupWidget.h"
 #include "ui_SetupWidget.h"
 
+#include <QModelIndex>
+#include <QGridLayout>
+
+#include "ComponentController.h"
 #include "SetupWizard/FirmwarePage.h"
 #include "SetupWizard/MessagePanel.h"
 #include "SetupWizard/ParamsPage.h"
 #include "QuadApplication.h"
 #include "VehicleManager.h"
-
-#include "ComponentController.h"
-#include <QModelIndex>
-#include <QGridLayout>
-
+#include "SetupWizard/SummaryViewPage.h"
 #include "SetupWizard/AirframePage.h"
 #include "SetupWizard/SensorsPage.h"
-#include "SetupWizard/SummaryPage.h"
-#include "SetupWizard/PowerPage.h"
+#include "SetupWizard/PowerGroupPage.h"
 
 SetupWidget::SetupWidget(QWidget *parent) :
     QWidget(parent),
@@ -33,12 +32,20 @@ SetupWidget::SetupWidget(QWidget *parent) :
     _firmwarePage = new FirmwarePage();
     _messagePanel = new MessagePanel();
     _paramsPage = new ParamsPage(this);
-    _summaryPage = new SummaryPage(this);
+    _summaryPage = new SummaryViewPage(this);
 
     ui->stackedWidget->addWidget(_summaryPage);
     ui->stackedWidget->addWidget(_firmwarePage);
     ui->stackedWidget->addWidget(_messagePanel);
     ui->stackedWidget->addWidget(_paramsPage);
+
+    connect(ui->pushButton_Airframe,&QPushButton::clicked,this,&SetupWidget::_showPanel);
+
+    connect(ui->pushButton_Radio,&QPushButton::clicked,this,&SetupWidget::_showPanel);
+    connect(ui->pushButton_fltModes,&QPushButton::clicked,this,&SetupWidget::_showPanel);
+    connect(ui->pushButton_Sensors,&QPushButton::clicked,this,&SetupWidget::_showPanel);
+
+    connect(ui->pushButton_Power,&QPushButton::clicked,this,&SetupWidget::_showPanel);
 }
 
 SetupWidget::~SetupWidget()
@@ -56,7 +63,9 @@ void SetupWidget::_activeVehicleChanged(Vehicle* vehicle)
  {
     qDebug()<<"CalWidget::_activeVehicleChanged";
     _vehicle = vehicle;
-    connect(_vehicle->autopilotPlugin(),&PX4AutopilotPlugin::setupCompleteChanged,_summaryPage,&SummaryPage::_setupCompleteChanged);
+    connect(_vehicle->autopilotPlugin(),&PX4AutopilotPlugin::setupCompleteChanged,_summaryPage,&SummaryViewPage::_setupCompleteChanged);
+    connect(_vehicle->autopilotPlugin(),&PX4AutopilotPlugin::setupCompleteStatus,_summaryPage,&SummaryViewPage::_setupCompleteStatus);
+
     connect(_vehicle->autopilotPlugin(),&PX4AutopilotPlugin::showMessage,_messagePanel,&MessagePanel::_showMessage);
     connect(_px4ParameterMetaData,&PX4ParameterMetaData::paramUpdate,_vehicle,&Vehicle::_paramUpdate);
 
@@ -66,7 +75,7 @@ void SetupWidget::_activeVehicleChanged(Vehicle* vehicle)
 
     _airframePage = new AirframePage(this);
     _sensorsPage = new SensorsPage(this);
-    _powerPage = new PowerPage(this);
+    _powerPage = new PowerGroupPage(this);
 
     ui->stackedWidget->addWidget(_airframePage);
     ui->stackedWidget->addWidget(_sensorsPage);
@@ -78,9 +87,13 @@ void SetupWidget::_activeVehicleChanged(Vehicle* vehicle)
     ui->pushButton_Power->setEnabled(true);
     ui->pushButton_Radio->setEnabled(true);
 
+    connect(this,&SetupWidget::showMessage,_messagePanel,&MessagePanel::_showMessage);
+    //connect(_airframePage,&AirframePage::showMessage,_messagePanel,&MessagePanel::_showMessage);
+    //connect(_sensorsPage,&SensorsPage::showMessage,_messagePanel,&MessagePanel::_showMessage);
+    //connect(_powerPage,&PowerGroupPage::showMessage,_messagePanel,&MessagePanel::_showMessage);
+
+    connect(_summaryPage,&SummaryViewPage::showPanel,this,&SetupWidget::_showCompPanel);
     _airframePage->initAirframeController();
-
-
  }
 
 void SetupWidget::loadParamFactMetaDataFile()
@@ -102,6 +115,76 @@ void SetupWidget::_showParams(QMap<QString, FactMetaData*> mapParameterName2Fact
     _paramsPage->showParams(mapParameterName2FactMetaData);
 }
 
+void SetupWidget::_showCompPanel(QString compName)
+{
+    _showComponentPanel(compName);
+}
+
+void SetupWidget::_showPanel()
+{
+    QPushButton* btn = qobject_cast<QPushButton*>(sender());
+    QString btnName = btn->text();
+    if(!btnName.isEmpty()) {
+        _showComponentPanel(btnName);
+    }
+}
+
+void SetupWidget::_showComponentPanel(QString name)
+{
+    if(_vehicle->autopilotPlugin()) {
+        bool allowSetupWhileArmed = true;
+        QString preRequisiteSetup;
+        QString componentName;
+
+        if(name == "Airframe") {
+            AirframeComponent* airframe = _vehicle->autopilotPlugin()->airframeComponent();
+            allowSetupWhileArmed = airframe->allowSetupWhileArmed();
+            preRequisiteSetup = airframe->prerequisiteSetup();
+            componentName = airframe->name();
+        }
+        else if(name == "Sensors") {
+            SensorsComponent* sensors = _vehicle->autopilotPlugin()->sensorsComponent();
+            allowSetupWhileArmed = sensors->allowSetupWhileArmed();
+            preRequisiteSetup = sensors->prerequisiteSetup();
+            componentName = sensors->name();
+        }
+        else if (name == "Power") {
+            PowerComponent* power = _vehicle->autopilotPlugin()->powerComponent();
+            allowSetupWhileArmed = power->allowSetupWhileArmed();
+            preRequisiteSetup = power->prerequisiteSetup();
+            componentName = power->name();
+        }
+
+        bool showMessagePanel = true;
+        QString message;
+        if(_vehicle->armed() && !allowSetupWhileArmed) {
+            message = _armedText;
+       }
+        else {
+            if(!preRequisiteSetup.isEmpty()) {
+                message = QString("%1 must be completed prior to %2 setup.").arg(preRequisiteSetup)
+                        .arg(componentName);
+            }
+            else {
+                showMessagePanel = false;
+            }
+        }
+        if(showMessagePanel) {
+            emit showMessage(message);
+            ui->stackedWidget->setCurrentWidget(_messagePanel);
+        }
+        else {
+            if (name == "Airframe") {
+                ui->stackedWidget->setCurrentWidget(_airframePage);
+            } else if(name == "Sensors") {
+                ui->stackedWidget->setCurrentWidget(_sensorsPage);
+            } else if(name == "Power") {
+                ui->stackedWidget->setCurrentWidget(_powerPage);
+            }
+        }
+    }
+}
+
 void SetupWidget::on_pushButton_Summary_clicked()
 {
     ui->stackedWidget->setCurrentWidget(_summaryPage);
@@ -112,23 +195,7 @@ void SetupWidget::on_pushButton_Firmware_clicked()
    ui->stackedWidget->setCurrentWidget(_firmwarePage);
 }
 
-void SetupWidget::on_pushButton_Airframe_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(_airframePage);
-}
-
-void SetupWidget::on_pushButton_Sensors_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(_sensorsPage);
-}
-
 void SetupWidget::on_pushButton_Parameters_clicked()
 {
     ui->stackedWidget->setCurrentWidget(_paramsPage);
-}
-
-void SetupWidget::on_pushButton_Power_clicked()
-{
-    ui->stackedWidget->setCurrentWidget(_powerPage);
-    _powerPage->initPowerController();
 }

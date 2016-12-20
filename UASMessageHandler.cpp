@@ -42,5 +42,6 @@ void UASMessageHandler::setToolbox(Toolbox* toolbox)
      Q_UNUSED(uasid)
      Q_UNUSED(componentid)
      Q_UNUSED(severity)
-     Q_UNUSED(text)
+
+     qDebug()<<"text: "<<text;
  }

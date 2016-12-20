@@ -21,6 +21,16 @@ void UAS::_activeVehicleChanged(Vehicle* vehicle)
 
 }
 
+void UAS::startCalibration(CalibrationType calType)
+{
+
+}
+
+void UAS::stopCalibration(void)
+{
+
+}
+
 void UAS::receiveMessage(SerialLink*link, mavlink_message_t &message)
 {
     //qDebug()<<"uas:receiveMessage"<<message.sysid<<message.compid;

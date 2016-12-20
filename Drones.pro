@@ -55,6 +55,7 @@ SOURCES += main.cpp\
     SetupWizard/FirmwarePage.cpp \
     SetupWizard/ParamsPage.cpp \
     SetupWizard/SensorsPage.cpp \
+    SetupWizard/PowerGroupPage.cpp \
     Vehicle.cpp \
     PX4AutopioltPlugins/ParamEditorController.cpp \
     PX4AutopioltPlugins/SensorsComponentController.cpp \
@@ -65,11 +66,11 @@ SOURCES += main.cpp\
     UASMessageHandler.cpp \
     UAS.cpp \
     TitleLabel.cpp \
-    SetupWizard/SummaryPage.cpp \
     ComponentController.cpp \
     SetupWizard/MessagePanel.cpp \
     SetupWidget.cpp \
-    SetupWizard/PowerPage.cpp
+    SetupWizard/SummaryViewPage.cpp
+
 
 HEADERS  += mainwindow.h \
     attitude_indicator.h \
@@ -98,6 +99,7 @@ HEADERS  += mainwindow.h \
     SetupWizard/FirmwarePage.h \
     SetupWizard/ParamsPage.h \
     SetupWizard/SensorsPage.h \
+    SetupWizard/PowerGroupPage.h \
     Vehicle.h \
     PX4AutopioltPlugins/ParamEditorController.h \
     PX4AutopioltPlugins/SensorsComponentController.h \
@@ -108,15 +110,15 @@ HEADERS  += mainwindow.h \
     UASMessageHandler.h \
     UAS.h \
     TitleLabel.h \
-    SetupWizard/SummaryPage.h \
     ComponentController.h \
     SetupWizard/MessagePanel.h \
     SetupWidget.h \
-    SetupWizard/PowerPage.h
+    SetupWizard/SummaryViewPage.h
 
 FORMS    += mainwindow.ui \
     SetupWidget.ui \
-    powerpage.ui
+    PowerGroupPage.ui \
+    SetupWizard/SummaryViewPage.ui
 
 UI_DIR  += E:\baseModule-12.1
 

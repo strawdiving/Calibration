@@ -12,8 +12,8 @@
 
 class AirframePage;
 class SensorsPage;
-class SummaryPage;
-class PowerPage;
+class SummaryViewPage;
+class PowerGroupPage;
 class Vehicle;
 class ComponentController;
 
@@ -36,30 +36,35 @@ public:
 
 signals:
      void showParams(QMap<QString, FactMetaData*> mapParameterName2FactMetaData);
+     void showMessage(const QString text);
 
 public slots:
      void _activeVehicleChanged(Vehicle* vehicle);
      void _showParams(QMap<QString, FactMetaData*> mapParameterName2FactMetaData);
      void loadParamFactMetaDataFile();
-     //void _showSetupView();
+     void _showPanel();
+     void _showCompPanel(QString compName);
+
 
 private slots:
      void on_pushButton_Summary_clicked();
      void on_pushButton_Firmware_clicked();
-     void on_pushButton_Airframe_clicked();
+    /* void on_pushButton_Airframe_clicked();
      void on_pushButton_Sensors_clicked();
+     void on_pushButton_Power_clicked();
+     */
      void on_pushButton_Parameters_clicked();
 
-     void on_pushButton_Power_clicked();
-
 private:
+     void _showComponentPanel(QString name);
+
       Ui::SetupWidget *ui;
       Vehicle* _vehicle;
 
       AirframePage* _airframePage;
       SensorsPage* _sensorsPage;
-      SummaryPage* _summaryPage;
-      PowerPage* _powerPage;
+      SummaryViewPage* _summaryPage;
+      PowerGroupPage* _powerPage;
 
       FirmwarePage* _firmwarePage;
 
@@ -67,7 +72,7 @@ private:
     ParamsPage* _paramsPage;
 
      PX4ParameterMetaData* _px4ParameterMetaData;
-
+     const QString _armedText = "This operation cannot be performed while vehicle is armed.";
 };
 
 #endif // SETUPWIDGET_H

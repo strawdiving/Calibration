@@ -30,6 +30,7 @@ public:
 
 signals:
     void autostartIdChange(int id);
+    void showMessage(const QString text);
 
 private slots:
     void _airframeTypeChanged(int row, int column);

@@ -43,7 +43,7 @@ signals:
     void showMessage(const QString text);
     void showSetupView();
 
-    void setupCompleteStatus(QString componentName,bool setupComplete);
+    void setupCompleteStatus(QMap<QString,bool>);
 
 public slots:
     void _parametersReadyPreCheck(bool noMissingParams);
@@ -65,6 +65,7 @@ private:
     bool _setupComplete;
 
     QVariantList _vehicleComponents;
+    QMap<QString,bool> _mapSetupCompleteStatus;
 
 };
 

@@ -22,6 +22,18 @@ public:
    void getStatusForCode(int statusCode, QString& uasState, QString& stateDescription);
    void receiveMessage(SerialLink *link, mavlink_message_t &message);
 
+   enum CalibrationType {
+       CalibrationRadio,
+       CalibrationGyro,
+       CalibrationMag,
+       CalibrationAccel,
+       CalibrationLevel,
+       CalibrationESC
+   };
+
+   void startCalibration(CalibrationType calType);
+   void stopCalibration(void);
+
 protected:
     QMap<int, QString> components;///< IDs and names of all detected onboard components
 

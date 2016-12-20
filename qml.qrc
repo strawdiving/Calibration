@@ -20,5 +20,16 @@
         <file>qmlImages/VehicleRight.png</file>
         <file>qmlImages/VehicleTailDown.png</file>
         <file>qmlImages/VehicleUpsideDown.png</file>
+        <file>qmlImages/Radio.png</file>
+        <file>qmlImages/AirplaneIcon.svg</file>
+        <file>qmlImages/PaperPlane.svg</file>
+        <file>qmlImages/Quad.svg</file>
+        <file>qmlImages/RC.svg</file>
+        <file>qmlImages/SafetyComponentTree.svg</file>
+        <file>qmlImages/TelemRSSI.svg</file>
+        <file>qmlImages/battery1.png</file>
+        <file>qmlImages/flightmode.png</file>
+        <file>qmlImages/AHRS.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

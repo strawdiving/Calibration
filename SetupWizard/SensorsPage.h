@@ -17,6 +17,9 @@ public:
     SensorsPage(SetupWidget *calWidget, QWidget *parent = 0);
     ~SensorsPage();
 
+signals:
+    void showMessage(const QString text);
+
 private:
     QPushButton* _compassCalButton;
     QPushButton* _gyroCalButton;

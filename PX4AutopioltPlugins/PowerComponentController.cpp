@@ -30,3 +30,7 @@ PowerComponentController::~PowerComponentController()
 
 }
 
+void PowerComponentController::calibrateESC()
+{
+
+}

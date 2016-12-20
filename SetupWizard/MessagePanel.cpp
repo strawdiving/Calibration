@@ -24,5 +24,4 @@ MessagePanel::~MessagePanel()
 void MessagePanel::_showMessage(const QString text)
 {
     _messageText->setText(text);
-
 }

@@ -52,6 +52,10 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         groupBox = new QGroupBox(SetupWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
+        QFont font;
+        font.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
+        font.setPointSize(12);
+        groupBox->setFont(font);
         gridLayout_3 = new QGridLayout(groupBox);
         gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
         verticalLayout = new QVBoxLayout();
@@ -65,12 +69,13 @@ public:
         sizePolicy.setHeightForWidth(pushButton_Summary->sizePolicy().hasHeightForWidth());
         pushButton_Summary->setSizePolicy(sizePolicy);
         pushButton_Summary->setBaseSize(QSize(1, 50));
-        QFont font;
-        font.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
-        font.setPointSize(12);
-        font.setBold(false);
-        font.setWeight(50);
-        pushButton_Summary->setFont(font);
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
+        font1.setPointSize(12);
+        font1.setBold(false);
+        font1.setWeight(50);
+        pushButton_Summary->setFont(font1);
+        pushButton_Summary->setAutoExclusive(true);
 
         verticalLayout->addWidget(pushButton_Summary);
 
@@ -79,7 +84,8 @@ public:
         sizePolicy.setHeightForWidth(pushButton_Firmware->sizePolicy().hasHeightForWidth());
         pushButton_Firmware->setSizePolicy(sizePolicy);
         pushButton_Firmware->setBaseSize(QSize(1, 50));
-        pushButton_Firmware->setFont(font);
+        pushButton_Firmware->setFont(font1);
+        pushButton_Firmware->setAutoExclusive(true);
 
         verticalLayout->addWidget(pushButton_Firmware);
 
@@ -89,10 +95,11 @@ public:
         sizePolicy.setHeightForWidth(pushButton_Airframe->sizePolicy().hasHeightForWidth());
         pushButton_Airframe->setSizePolicy(sizePolicy);
         pushButton_Airframe->setBaseSize(QSize(1, 50));
-        pushButton_Airframe->setFont(font);
+        pushButton_Airframe->setFont(font1);
         QIcon icon;
         icon.addFile(QStringLiteral(":/qmlImages/qmlImages/Airframe/AirframeComponentIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_Airframe->setIcon(icon);
+        pushButton_Airframe->setAutoExclusive(true);
 
         verticalLayout->addWidget(pushButton_Airframe);
 
@@ -102,10 +109,11 @@ public:
         sizePolicy.setHeightForWidth(pushButton_Radio->sizePolicy().hasHeightForWidth());
         pushButton_Radio->setSizePolicy(sizePolicy);
         pushButton_Radio->setBaseSize(QSize(1, 50));
-        pushButton_Radio->setFont(font);
+        pushButton_Radio->setFont(font1);
         QIcon icon1;
         icon1.addFile(QStringLiteral(":/qmlImages/qmlImages/RadioComponentIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_Radio->setIcon(icon1);
+        pushButton_Radio->setAutoExclusive(true);
 
         verticalLayout->addWidget(pushButton_Radio);
 
@@ -115,10 +123,11 @@ public:
         sizePolicy.setHeightForWidth(pushButton_fltModes->sizePolicy().hasHeightForWidth());
         pushButton_fltModes->setSizePolicy(sizePolicy);
         pushButton_fltModes->setBaseSize(QSize(1, 50));
-        pushButton_fltModes->setFont(font);
+        pushButton_fltModes->setFont(font1);
         QIcon icon2;
         icon2.addFile(QStringLiteral(":/qmlImages/qmlImages/TuningComponentIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_fltModes->setIcon(icon2);
+        pushButton_fltModes->setAutoExclusive(true);
 
         verticalLayout->addWidget(pushButton_fltModes);
 
@@ -128,10 +137,11 @@ public:
         sizePolicy.setHeightForWidth(pushButton_Sensors->sizePolicy().hasHeightForWidth());
         pushButton_Sensors->setSizePolicy(sizePolicy);
         pushButton_Sensors->setBaseSize(QSize(1, 50));
-        pushButton_Sensors->setFont(font);
+        pushButton_Sensors->setFont(font1);
         QIcon icon3;
         icon3.addFile(QStringLiteral(":/qmlImages/qmlImages/SensorsComponentIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_Sensors->setIcon(icon3);
+        pushButton_Sensors->setAutoExclusive(true);
 
         verticalLayout->addWidget(pushButton_Sensors);
 
@@ -141,10 +151,11 @@ public:
         sizePolicy.setHeightForWidth(pushButton_Power->sizePolicy().hasHeightForWidth());
         pushButton_Power->setSizePolicy(sizePolicy);
         pushButton_Power->setBaseSize(QSize(1, 50));
-        pushButton_Power->setFont(font);
+        pushButton_Power->setFont(font1);
         QIcon icon4;
         icon4.addFile(QStringLiteral(":/qmlImages/qmlImages/PowerComponentIcon.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_Power->setIcon(icon4);
+        pushButton_Power->setAutoExclusive(true);
 
         verticalLayout->addWidget(pushButton_Power);
 
@@ -153,7 +164,8 @@ public:
         sizePolicy.setHeightForWidth(pushButton_Parameters->sizePolicy().hasHeightForWidth());
         pushButton_Parameters->setSizePolicy(sizePolicy);
         pushButton_Parameters->setBaseSize(QSize(1, 50));
-        pushButton_Parameters->setFont(font);
+        pushButton_Parameters->setFont(font1);
+        pushButton_Parameters->setAutoExclusive(true);
 
         verticalLayout->addWidget(pushButton_Parameters);
 
@@ -165,10 +177,10 @@ public:
 
         stackedWidget = new QStackedWidget(SetupWidget);
         stackedWidget->setObjectName(QStringLiteral("stackedWidget"));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
-        font1.setPointSize(11);
-        stackedWidget->setFont(font1);
+        QFont font2;
+        font2.setFamily(QString::fromUtf8("\345\276\256\350\275\257\351\233\205\351\273\221"));
+        font2.setPointSize(11);
+        stackedWidget->setFont(font2);
 
         gridLayout->addWidget(stackedWidget, 0, 1, 1, 1);
 
