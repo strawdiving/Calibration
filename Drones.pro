@@ -54,7 +54,6 @@ SOURCES += main.cpp\
     SetupWizard/AirframePage.cpp \
     SetupWizard/FirmwarePage.cpp \
     SetupWizard/ParamsPage.cpp \
-    SetupWizard/SensorsPage.cpp \
     SetupWizard/PowerGroupPage.cpp \
     Vehicle.cpp \
     PX4AutopioltPlugins/ParamEditorController.cpp \
@@ -69,7 +68,10 @@ SOURCES += main.cpp\
     ComponentController.cpp \
     SetupWizard/MessagePanel.cpp \
     SetupWidget.cpp \
-    SetupWizard/SummaryViewPage.cpp
+    SetupWizard/SummaryViewPage.cpp \
+    SetupWizard/SensorsGroupPage.cpp \
+    SetupWizard/CalRotationWidget.cpp \
+    SetupWizard/OrientationWidget.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -98,7 +100,6 @@ HEADERS  += mainwindow.h \
     SetupWizard/AirframePage.h \
     SetupWizard/FirmwarePage.h \
     SetupWizard/ParamsPage.h \
-    SetupWizard/SensorsPage.h \
     SetupWizard/PowerGroupPage.h \
     Vehicle.h \
     PX4AutopioltPlugins/ParamEditorController.h \
@@ -113,12 +114,17 @@ HEADERS  += mainwindow.h \
     ComponentController.h \
     SetupWizard/MessagePanel.h \
     SetupWidget.h \
-    SetupWizard/SummaryViewPage.h
+    SetupWizard/SummaryViewPage.h \
+    SetupWizard/SensorsGroupPage.h \
+    SetupWizard/CalRotationWidget.h \
+    SetupWizard/OrientationWidget.h
 
 FORMS    += mainwindow.ui \
     SetupWidget.ui \
     PowerGroupPage.ui \
-    SetupWizard/SummaryViewPage.ui
+    SetupWizard/SummaryViewPage.ui \
+    SetupWizard/SensorsGroupPage.ui \
+    SetupWizard/CalRotationWidget.ui
 
 UI_DIR  += E:\baseModule-12.1
 

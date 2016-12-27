@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/qmlImages">
-        <file>qmlImages/Airframe/AirframeUnknown.svg</file>
         <file>qmlImages/PowerComponentIcon.png</file>
         <file>qmlImages/RadioComponentIcon.png</file>
         <file>qmlImages/SafetyComponentIcon.png</file>
@@ -14,22 +13,29 @@
         <file>qmlImages/Airframe/AirframeOctoRotorX.png</file>
         <file>qmlImages/Airframe/AirframeQuadRotorX.png</file>
         <file>qmlImages/TuningComponentIcon.png</file>
-        <file>qmlImages/VehicleDown.png</file>
-        <file>qmlImages/VehicleLeft.png</file>
-        <file>qmlImages/VehicleNoseDown.png</file>
-        <file>qmlImages/VehicleRight.png</file>
-        <file>qmlImages/VehicleTailDown.png</file>
-        <file>qmlImages/VehicleUpsideDown.png</file>
-        <file>qmlImages/Radio.png</file>
         <file>qmlImages/AirplaneIcon.svg</file>
         <file>qmlImages/PaperPlane.svg</file>
         <file>qmlImages/Quad.svg</file>
         <file>qmlImages/RC.svg</file>
         <file>qmlImages/SafetyComponentTree.svg</file>
         <file>qmlImages/TelemRSSI.svg</file>
-        <file>qmlImages/battery1.png</file>
-        <file>qmlImages/flightmode.png</file>
-        <file>qmlImages/AHRS.png</file>
+        <file>qmlImages/2Radio.png</file>
+        <file>qmlImages/3flightmode.png</file>
+        <file>qmlImages/4AHRS.png</file>
+        <file>qmlImages/5battery.png</file>
+        <file>qmlImages/1QuadRotorX.svg</file>
+        <file>qmlImages/Vehicle1Down.png</file>
+        <file>qmlImages/Vehicle2UpsideDown.png</file>
+        <file>qmlImages/Vehicle3Left.png</file>
+        <file>qmlImages/Vehicle4Right.png</file>
+        <file>qmlImages/Vehicle5NoseDown.png</file>
+        <file>qmlImages/Vehicle6TailDown.png</file>
+        <file>qmlImages/VehicleDownRotate.png</file>
+        <file>qmlImages/VehicleLeftRotate.png</file>
+        <file>qmlImages/VehicleNoseDownRotate.png</file>
+        <file>qmlImages/VehicleRightRotate.png</file>
+        <file>qmlImages/VehicleTailDownRotate.png</file>
+        <file>qmlImages/VehicleUpsideDownRotate.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

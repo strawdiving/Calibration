@@ -68,6 +68,8 @@ private:
     int _uasId;                    ///< Unique system ID
      /// BASIC UAS TYPE, NAME AND STATE
     int _status;                   ///< The current status of the MAV
+
+    const static int defaultComponentId = 0;
 };
 
 #endif // UAS_H

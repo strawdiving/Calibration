@@ -17,6 +17,8 @@ signals:
     void sendBatteryParams(int cells,float full,float empty);
 
 public slots:
+    void _handleTextMessage(int uasid, int componentid, int severity, QString text);
+
 
 
 private:

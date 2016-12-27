@@ -1,5 +1,6 @@
 #include "UAS.h"
 #include "Vehicle.h"
+#include "linkmanager.h"
 #include <QDebug>
 
 UAS::UAS(Vehicle *vehicle)
@@ -18,21 +19,86 @@ UAS::~UAS()
 
 void UAS::_activeVehicleChanged(Vehicle* vehicle)
 {
+    Q_UNUSED(vehicle)
 
 }
 
 void UAS::startCalibration(CalibrationType calType)
 {
+    if(!_vehicle) {
+        return;
+    }
 
+    int gyroCal = 0;
+    int magCal = 0;
+    int accelCal = 0;
+    int radioCal = 0;
+    int escCal = 0;
+
+    switch(calType) {
+    case CalibrationGyro:
+        gyroCal = 1;
+        break;
+    case CalibrationMag:
+        magCal = 1;
+        break;
+    case CalibrationAccel:
+        accelCal = 1;
+        break;
+    case CalibrationLevel:
+        accelCal = 2;
+        break;
+    case CalibrationRadio:
+        radioCal = 1;
+        break;
+    case CalibrationESC:
+        escCal = 1;
+        break;
+    }
+
+    mavlink_message_t msg;
+    mavlink_command_long_t command;
+    command.target_system = _uasId;
+    command.target_component = 0;
+    command.command = MAV_CMD_PREFLIGHT_CALIBRATION;
+    command.confirmation = 0; // 0 = first transmission of command
+    command.param1 = gyroCal; //gyro cal
+    command.param2 = magCal; //mag cal
+    command.param3 = 0; //ground pressure
+    command.param4 = radioCal; //radio cal
+    command.param5 = accelCal; //accel cal
+    command.param6 = 0; //airspeed cal (compass/motor interference cal)
+    command.param7 = escCal; //empty?
+    mavlink_msg_command_long_encode(_uasId,defaultComponentId,&msg,&command);
+    _vehicle->linkManager()->sendMessage(msg);
 }
 
 void UAS::stopCalibration(void)
 {
+    if(!_vehicle) {
+        return;
+    }
 
+    mavlink_message_t msg;
+    mavlink_command_long_t command;
+    command.target_system = _uasId;
+    command.target_component = 0;
+    command.command = MAV_CMD_PREFLIGHT_CALIBRATION;
+    command.confirmation = 0; // 0 = first transmission of command
+    command.param1 = 0; //gyro cal
+    command.param2 = 0; //mag cal
+    command.param3 = 0; //ground pressure
+    command.param4 = 0; //radio cal
+    command.param5 = 0; //accel cal
+    command.param6 = 0; //airspeed cal (compass/motor interference cal)
+    command.param7 = 0; //empty?
+    mavlink_msg_command_long_encode(_uasId,defaultComponentId,&msg,&command);
+    _vehicle->linkManager()->sendMessage(msg);
 }
 
 void UAS::receiveMessage(SerialLink*link, mavlink_message_t &message)
 {
+    Q_UNUSED(link)
     //qDebug()<<"uas:receiveMessage"<<message.sysid<<message.compid;
     if(!components.contains(message.compid)) {
         QString compName;
@@ -243,9 +309,13 @@ void UAS::shutdownVehicle(void)
 
 void UAS::_readParameterRaw(int componentId, const QString& paramName, int paramIndex)
 {
+    Q_UNUSED(componentId)
+    Q_UNUSED(paramIndex)
     mavlink_message_t msg;
     mavlink_param_request_read_t param;
 
+    Q_UNUSED(msg)
+    Q_UNUSED(param)
     char fixedParamName[MAVLINK_MSG_PARAM_REQUEST_READ_FIELD_PARAM_ID_LEN];
     strncpy_s(fixedParamName,paramName.toStdString().c_str(),sizeof(fixedParamName));
 

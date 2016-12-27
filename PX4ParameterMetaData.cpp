@@ -26,6 +26,7 @@ void PX4ParameterMetaData::addMetaDataToFact(Fact* fact)
 
 void PX4ParameterMetaData::loadParamFactMetaDataFile(QString &metaDataFile)
 {
+    Q_UNUSED(metaDataFile)
     _mapParameterName2FactMetaData.clear();
     //loadParameterFactMetaDataFile(metaDataFile);
     loadParameterFactMetaDataFile(QString("F:\\baseModule\\PX4ParameterFactMetaData.xml"));

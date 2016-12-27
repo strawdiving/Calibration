@@ -32,5 +32,14 @@ PowerComponentController::~PowerComponentController()
 
 void PowerComponentController::calibrateESC()
 {
+    connect(_uas,&UAS::textMessageReceived,this,&PowerComponentController::_handleTextMessage);
+    _uas->startCalibration(UAS::CalibrationESC);
+}
 
+void PowerComponentController::_handleTextMessage(int uasid, int componentid, int severity, QString text)
+{
+    Q_UNUSED(uasid)
+    Q_UNUSED(componentid)
+    Q_UNUSED(severity)
+    qDebug()<<"esc cal: "<<text;
 }

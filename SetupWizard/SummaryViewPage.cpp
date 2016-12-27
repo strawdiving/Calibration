@@ -16,12 +16,11 @@ SummaryViewPage::SummaryViewPage(SetupWidget *calWidget, QWidget *parent) :
     ui->label_helpText->setText(needSetupText);
     ui->listWidget->setVisible(false);
 
-    _components.insert(":/qmlImages/qmlImages/Airframe/AirframeQuadRotorX.png",       "Airframe");
-    _components.insert(":/qmlImages/qmlImages/Radio.png",                                                 "Radio");
-    _components.insert(":/qmlImages/qmlImages/AHRS.png",                                                "Sensors");
-    _components.insert(":/qmlImages/qmlImages/flightmode.png",                                         "Flight Modes");
-    _components.insert(":/qmlImages/qmlImages/battery1.png",                                             "Power");
-
+    _components.insert(":/qmlImages/qmlImages/1QuadRotorX.svg",       "Airframe");
+    _components.insert(":/qmlImages/qmlImages/2Radio.png",                                                 "Radio");
+    _components.insert(":/qmlImages/qmlImages/4AHRS.png",                                                "Sensors");
+    _components.insert(":/qmlImages/qmlImages/3flightmode.png",                                         "Flight Modes");
+    _components.insert(":/qmlImages/qmlImages/5battery.png",                                             "Power");
 }
 
 void SummaryViewPage::_showPanel(QModelIndex)

@@ -325,7 +325,6 @@ public:
         sizePolicy2.setHeightForWidth(pushButton_Connect->sizePolicy().hasHeightForWidth());
         pushButton_Connect->setSizePolicy(sizePolicy2);
         pushButton_Connect->setFont(font);
-        pushButton_Connect->setStyleSheet(QStringLiteral("background-color: rgb(0, 170, 0);"));
         QIcon icon;
         icon.addFile(QStringLiteral(":/attitude/attitude/wifi.png"), QSize(), QIcon::Normal, QIcon::Off);
         pushButton_Connect->setIcon(icon);

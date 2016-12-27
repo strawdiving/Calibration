@@ -21,11 +21,11 @@ public slots:
 protected:
     Fact* getParamFact(int compId,const QString paramName,bool reportMissing = true);
     bool _allParamsExist(int compId,QStringList params);
+    UAS* _uas;
+    PX4AutopilotPlugin *_autopilot;
 
 private:
     Vehicle* _vehicle;
-    PX4AutopilotPlugin *_autopilot;
-    UAS* _uas;
 
     //PX4ParameterMetaData* _px4ParameterMetaData;
 };

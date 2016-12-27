@@ -11,7 +11,7 @@
 #include "PX4ParameterMetaData.h"
 
 class AirframePage;
-class SensorsPage;
+class SensorsGroupPage;
 class SummaryViewPage;
 class PowerGroupPage;
 class Vehicle;
@@ -62,7 +62,7 @@ private:
       Vehicle* _vehicle;
 
       AirframePage* _airframePage;
-      SensorsPage* _sensorsPage;
+      SensorsGroupPage* _sensorsPage;
       SummaryViewPage* _summaryPage;
       PowerGroupPage* _powerPage;
 
@@ -70,6 +70,8 @@ private:
 
     MessagePanel*  _messagePanel;
     ParamsPage* _paramsPage;
+
+    QPushButton* _selectedBtn;
 
      PX4ParameterMetaData* _px4ParameterMetaData;
      const QString _armedText = "This operation cannot be performed while vehicle is armed.";

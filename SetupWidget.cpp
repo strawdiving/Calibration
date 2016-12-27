@@ -12,7 +12,7 @@
 #include "VehicleManager.h"
 #include "SetupWizard/SummaryViewPage.h"
 #include "SetupWizard/AirframePage.h"
-#include "SetupWizard/SensorsPage.h"
+#include "SetupWizard/SensorsGroupPage.h"
 #include "SetupWizard/PowerGroupPage.h"
 
 SetupWidget::SetupWidget(QWidget *parent) :
@@ -25,10 +25,14 @@ SetupWidget::SetupWidget(QWidget *parent) :
   , _sensorsPage(NULL)
   , _summaryPage(NULL)
   , _powerPage(NULL)
+  , _selectedBtn(NULL)
   , _vehicle(NULL)
   , _px4ParameterMetaData(NULL)
 {
     ui->setupUi(this);
+    this->setStyleSheet("QPushButton {background: #cfe2f3}"
+                        "QPushButton:pressed {background: #6699cc}");
+
     _firmwarePage = new FirmwarePage();
     _messagePanel = new MessagePanel();
     _paramsPage = new ParamsPage(this);
@@ -74,7 +78,7 @@ void SetupWidget::_activeVehicleChanged(Vehicle* vehicle)
     _px4ParameterMetaData->loadParamFactMetaDataFile(QString());
 
     _airframePage = new AirframePage(this);
-    _sensorsPage = new SensorsPage(this);
+    _sensorsPage = new SensorsGroupPage(this);
     _powerPage = new PowerGroupPage(this);
 
     ui->stackedWidget->addWidget(_airframePage);
@@ -122,8 +126,18 @@ void SetupWidget::_showCompPanel(QString compName)
 
 void SetupWidget::_showPanel()
 {
-    QPushButton* btn = qobject_cast<QPushButton*>(sender());
-    QString btnName = btn->text();
+    QPushButton* selectedBtn = qobject_cast<QPushButton*>(sender());
+    if(!_selectedBtn) {
+        _selectedBtn = selectedBtn;
+        _selectedBtn->setStyleSheet("background-color:#6699cc; border-color:green");
+    }
+    if(_selectedBtn && _selectedBtn != selectedBtn) {
+        _selectedBtn->setStyleSheet("background-color: #cfe2f3");
+        _selectedBtn = selectedBtn;
+        _selectedBtn->setStyleSheet("background-color:#6699cc; border-color:green");
+    }
+
+    QString btnName = _selectedBtn->text();
     if(!btnName.isEmpty()) {
         _showComponentPanel(btnName);
     }
@@ -177,8 +191,10 @@ void SetupWidget::_showComponentPanel(QString name)
             if (name == "Airframe") {
                 ui->stackedWidget->setCurrentWidget(_airframePage);
             } else if(name == "Sensors") {
+                _sensorsPage->initSensorsController();
                 ui->stackedWidget->setCurrentWidget(_sensorsPage);
             } else if(name == "Power") {
+                _powerPage->initPowerController();
                 ui->stackedWidget->setCurrentWidget(_powerPage);
             }
         }

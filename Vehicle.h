@@ -28,6 +28,7 @@ public:
     UAS* uas(void) {return _uas;}
     ParameterLoader* parameterLoader(void) {return _parameterLoader;}
     PX4FirmwarePlugin* firmwarePlugin(void) {return _firmwarePlugin;}
+    LinkManager* linkManager(void) { return _linkMgr;}
 
     int id(void) { return _vehicleId;}
 

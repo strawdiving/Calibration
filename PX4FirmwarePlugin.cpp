@@ -25,6 +25,7 @@ PX4FirmwarePlugin::~PX4FirmwarePlugin()
 
 PX4ParameterMetaData* PX4FirmwarePlugin::loadParamFactMetaDataFile(QString &metaDataFile)
 {
+    Q_UNUSED(metaDataFile)
    _px4metaData = new PX4ParameterMetaData;
 
    qDebug()<<"PX4FirmwarePlugin::loadParamFactMetaDataFile";
