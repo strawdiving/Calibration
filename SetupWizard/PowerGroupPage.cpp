@@ -8,8 +8,6 @@ PowerGroupPage::PowerGroupPage(QWidget *parent) :
     ui->setupUi(this);
     ui->label_escText1->setText(escTex1);
     ui->label_escText2->setText(escText2);
-
-
 }
 
 PowerGroupPage::~PowerGroupPage()

@@ -14,6 +14,8 @@ class AirframePage;
 class SensorsGroupPage;
 class SummaryViewPage;
 class PowerGroupPage;
+class RadioPage;
+class FlightModesPage;
 class Vehicle;
 class ComponentController;
 
@@ -65,6 +67,8 @@ private:
       SensorsGroupPage* _sensorsPage;
       SummaryViewPage* _summaryPage;
       PowerGroupPage* _powerPage;
+      RadioPage* _radioPage;
+      FlightModesPage* _fltModePage;
 
       FirmwarePage* _firmwarePage;
 

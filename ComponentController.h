@@ -23,9 +23,9 @@ protected:
     bool _allParamsExist(int compId,QStringList params);
     UAS* _uas;
     PX4AutopilotPlugin *_autopilot;
-
-private:
     Vehicle* _vehicle;
+
+private:    
 
     //PX4ParameterMetaData* _px4ParameterMetaData;
 };

@@ -27,7 +27,7 @@ CalRotationWidget::CalRotationWidget(QWidget *parent) :
     _noseDownWidget = new OrientationWidget("NoseDown");
     _tailDownWidget = new OrientationWidget("TailDown");
 
-     _downWidget->setObjectName("down");
+    _downWidget->setObjectName("down");
     _upsideDownWidget->setObjectName("up");
     _leftWidget->setObjectName("left");
     _rightWidget->setObjectName("right");
@@ -65,7 +65,7 @@ void CalRotationWidget::_status(QString message)
 
 void CalRotationWidget::_calStatusChanged(QString side,bool inProgress,bool rotate,bool done)
 {
-    //qDebug()<<"name,inProgress,rotate,done"<<side<< inProgress<<rotate<<done;
+    qDebug()<<"name,inProgress,rotate,done"<<side<< inProgress<<rotate<<done;
     if(_currentWidget) {
         disconnect(this,&CalRotationWidget::calStatusChanged,_currentWidget,&OrientationWidget::_statusChanged);
     }
@@ -79,9 +79,20 @@ void CalRotationWidget::_calStatusChanged(QString side,bool inProgress,bool rota
     }
 }
 
-void CalRotationWidget::_calVisibleChanged(QString side)
+void CalRotationWidget:: _sidesVisibleChanged(int sidesVisible)
 {
-
+    qDebug()<<"sidesVisible: "<<sidesVisible;
+    if(sidesVisible == 0) {
+        ui->widget_CalOrientations->setVisible(false);
+    }else {
+        ui->widget_CalOrientations->setVisible(true);
+        _tailDownWidget->setVisible((sidesVisible & (1<<0)) >0);
+        _noseDownWidget->setVisible((sidesVisible & (1<<1)) >0);
+        _leftWidget->setVisible((sidesVisible & (1<<2)) >0);
+        _rightWidget->setVisible((sidesVisible & (1<<3)) >0);
+        _upsideDownWidget->setVisible((sidesVisible & (1<<4)) >0);
+        _downWidget->setVisible((sidesVisible & (1<<5)) >0);
+    }
 }
 
 

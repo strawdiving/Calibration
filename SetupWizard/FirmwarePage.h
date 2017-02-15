@@ -29,7 +29,6 @@ public:
     ~FirmwarePage();
 
 public slots:
-    void _status(const QString& statusString, bool critical);
     void _updateProgress(int curr, int total);
 
     void _foundBoard(bool firstAttempt, const QString portname, QString portDescription);
@@ -51,15 +50,11 @@ public slots:
 private slots:
 
 private:
-
+    void _status(const QString& statusString, bool critical);
     void _appendStatus(const QString& text, bool critical = false);
     void _errorCancel(QString errorString);
     void _getFimwareFile();
     void _downloadFirmware();
-    bool _decompressJsonValue(const QJsonObject&	jsonObject,	const QByteArray&	jsonDocBytes,		//< Raw bytes of JSON document
-                                             const QString&		sizeKey,			//< key which holds byte size
-                                             const QString&		bytesKey,			//< key which holds compress bytes
-                                             QByteArray&		decompressedBytes);	//< Returned decompressed bytes
 
     PX4FirmUpgradeThreadController* _controller;
 

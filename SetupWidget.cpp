@@ -14,6 +14,8 @@
 #include "SetupWizard/AirframePage.h"
 #include "SetupWizard/SensorsGroupPage.h"
 #include "SetupWizard/PowerGroupPage.h"
+#include "SetupWizard/RadioPage.h"
+#include "SetupWizard/FlightModesPage.h"
 
 SetupWidget::SetupWidget(QWidget *parent) :
     QWidget(parent),
@@ -23,6 +25,8 @@ SetupWidget::SetupWidget(QWidget *parent) :
   , _paramsPage(NULL)
   , _airframePage(NULL)
   , _sensorsPage(NULL)
+  , _radioPage(NULL)
+  , _fltModePage(NULL)
   , _summaryPage(NULL)
   , _powerPage(NULL)
   , _selectedBtn(NULL)
@@ -48,7 +52,7 @@ SetupWidget::SetupWidget(QWidget *parent) :
     connect(ui->pushButton_Radio,&QPushButton::clicked,this,&SetupWidget::_showPanel);
     connect(ui->pushButton_fltModes,&QPushButton::clicked,this,&SetupWidget::_showPanel);
     connect(ui->pushButton_Sensors,&QPushButton::clicked,this,&SetupWidget::_showPanel);
-
+    connect(ui->pushButton_Radio,&QPushButton::clicked,this,&SetupWidget::_showPanel);
     connect(ui->pushButton_Power,&QPushButton::clicked,this,&SetupWidget::_showPanel);
 }
 
@@ -80,10 +84,14 @@ void SetupWidget::_activeVehicleChanged(Vehicle* vehicle)
     _airframePage = new AirframePage(this);
     _sensorsPage = new SensorsGroupPage(this);
     _powerPage = new PowerGroupPage(this);
+    _radioPage = new RadioPage(this);
+    _fltModePage = new FlightModesPage(this);
 
     ui->stackedWidget->addWidget(_airframePage);
     ui->stackedWidget->addWidget(_sensorsPage);
     ui->stackedWidget->addWidget(_powerPage);
+    ui->stackedWidget->addWidget(_radioPage);
+    ui->stackedWidget->addWidget(_fltModePage);
 
     ui->pushButton_Airframe->setEnabled(true);
     ui->pushButton_Sensors->setEnabled(true);
@@ -168,6 +176,20 @@ void SetupWidget::_showComponentPanel(QString name)
             preRequisiteSetup = power->prerequisiteSetup();
             componentName = power->name();
         }
+        else if (name == "Radio") {
+            RadioComponent* radio = _vehicle->autopilotPlugin()->radioComponent();
+            allowSetupWhileArmed = radio->allowSetupWhileArmed();
+            preRequisiteSetup = radio->prerequisiteSetup();
+            componentName = radio->name();
+        }
+        else if (name == "Flight Modes") {
+            FlightModesComponent* fltMode = _vehicle->autopilotPlugin()->flightmodesComponent();
+            allowSetupWhileArmed = fltMode->allowSetupWhileArmed();
+            //preRequisiteSetup = fltMode->prerequisiteSetup();
+            //for test
+            preRequisiteSetup = "";
+            componentName = fltMode->name();
+        }
 
         bool showMessagePanel = true;
         QString message;
@@ -196,6 +218,13 @@ void SetupWidget::_showComponentPanel(QString name)
             } else if(name == "Power") {
                 _powerPage->initPowerController();
                 ui->stackedWidget->setCurrentWidget(_powerPage);
+            } else if(name == "Radio") {
+                _radioPage->initRadioController();
+                ui->stackedWidget->setCurrentWidget(_radioPage);
+            }
+            else if(name == "Flight Modes") {
+                _fltModePage->initFltModeController();
+                ui->stackedWidget->setCurrentWidget(_fltModePage);
             }
         }
     }

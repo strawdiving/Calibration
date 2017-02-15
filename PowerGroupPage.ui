@@ -35,7 +35,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Power Config</string>
+      <string>动力系统校准</string>
      </property>
     </widget>
    </item>
@@ -48,7 +48,7 @@
       </font>
      </property>
      <property name="title">
-      <string>Battery</string>
+      <string>电池</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
@@ -68,7 +68,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Num of Cells (in series)</string>
+           <string>Num of Cells</string>
           </property>
          </widget>
         </item>
@@ -158,7 +158,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Battery Max:</string>
+           <string>最大电压:</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -254,7 +254,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Full Voltage (per cell) </string>
+           <string>满压 (per cell) </string>
           </property>
          </widget>
         </item>
@@ -344,7 +344,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Battery Min: </string>
+           <string>最小电压: </string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -440,7 +440,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Empty Voltage (per cell) </string>
+           <string>低压 (per cell) </string>
           </property>
          </widget>
         </item>
@@ -535,7 +535,7 @@
       </font>
      </property>
      <property name="title">
-      <string>ESC Calibration</string>
+      <string>电调校准</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
@@ -637,7 +637,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Calibrate</string>
+           <string>校准</string>
           </property>
          </widget>
         </item>

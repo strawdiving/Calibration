@@ -181,7 +181,42 @@ void Vehicle::_mavlinkMessageReceived(SerialLink*link, mavlink_message_t &messag
       {
          mavlink_rc_channels_t rc_channels;
          mavlink_msg_rc_channels_decode(&message,&rc_channels);
+
+         uint16_t channelValues[maxRCChannelsCount] = {
+             rc_channels.chan1_raw,
+             rc_channels.chan2_raw,
+             rc_channels.chan3_raw,
+             rc_channels.chan4_raw,
+             rc_channels.chan5_raw,
+             rc_channels.chan6_raw,
+             rc_channels.chan7_raw,
+             rc_channels.chan8_raw,
+             rc_channels.chan9_raw,
+             rc_channels.chan10_raw,
+             rc_channels.chan11_raw,
+             rc_channels.chan12_raw,
+             rc_channels.chan13_raw,
+             rc_channels.chan14_raw,
+             rc_channels.chan15_raw,
+             rc_channels.chan16_raw,
+             rc_channels.chan17_raw,
+             rc_channels.chan18_raw,
+         };
+         int pwmValues[maxRCChannelsCount];
+         for(int i = 0; i <maxRCChannelsCount;i++) {
+             uint16_t channelValue = channelValues[i];
+
+             //assume that chancount < maxRcChannelsCount
+             if(i<rc_channels.chancount) {
+                 pwmValues[i] = channelValue == UINT16_MAX? -1:channelValue;
+             }
+             else {
+                 pwmValues[i] = -1;
+             }
+
+         }
          emit telemetryChanged(rc_channels.rssi);
+         emit rcChannelsChanged(rc_channels.chancount,pwmValues);
       }
          break;
 

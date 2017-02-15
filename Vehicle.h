@@ -40,7 +40,9 @@ public:
     QStringList flightModes();
 
     bool armed(void) {return _armed;}
-    bool active(void) {return _active;}
+    bool active(void) {return _active;}    
+
+    static const int maxRCChannelsCount = 18;
 
 signals:
     void linkDeleted(Vehicle* vehicle);
@@ -56,6 +58,8 @@ signals:
     void globalPositionChanged(mavlink_global_position_int_t* global_position_int);
     void localPositionChanged(mavlink_local_position_ned_t* local_position);
     void groundSpeedChanged(float);
+
+    void rcChannelsChanged(int channelCount,int pwmValues[maxRCChannelsCount]);
 
     void parameterReadyVehicleAvailableChanged(bool parameterReadyVehicleAvailable);
     //void activeVehicleChanged(Vehicle* activeVehicle);
@@ -99,6 +103,7 @@ private:
     static const char* offboardFMode;                                 //OFFBOARD
     static const char* rtlFMode;                                            //AUTO_RTL
     static const char* loiterFMode;                                       //AUTO_LOITER    
+
 };
 
 #endif // VEHICLE_H

@@ -263,19 +263,19 @@ public:
     void retranslateUi(QWidget *PowerGroupPage)
     {
         PowerGroupPage->setWindowTitle(QApplication::translate("PowerGroupPage", "Form", 0));
-        label_8->setText(QApplication::translate("PowerGroupPage", "Power Config", 0));
-        groupBox->setTitle(QApplication::translate("PowerGroupPage", "Battery", 0));
-        label_2->setText(QApplication::translate("PowerGroupPage", "Num of Cells (in series)", 0));
-        label_4->setText(QApplication::translate("PowerGroupPage", "Battery Max:", 0));
+        label_8->setText(QApplication::translate("PowerGroupPage", "\345\212\250\345\212\233\347\263\273\347\273\237\346\240\241\345\207\206", 0));
+        groupBox->setTitle(QApplication::translate("PowerGroupPage", "\347\224\265\346\261\240", 0));
+        label_2->setText(QApplication::translate("PowerGroupPage", "Num of Cells", 0));
+        label_4->setText(QApplication::translate("PowerGroupPage", "\346\234\200\345\244\247\347\224\265\345\216\213:", 0));
         label_batMax->setText(QString());
-        label->setText(QApplication::translate("PowerGroupPage", "Full Voltage (per cell) ", 0));
-        label_6->setText(QApplication::translate("PowerGroupPage", "Battery Min: ", 0));
+        label->setText(QApplication::translate("PowerGroupPage", "\346\273\241\345\216\213 (per cell) ", 0));
+        label_6->setText(QApplication::translate("PowerGroupPage", "\346\234\200\345\260\217\347\224\265\345\216\213: ", 0));
         label_batMin->setText(QString());
-        label_3->setText(QApplication::translate("PowerGroupPage", "Empty Voltage (per cell) ", 0));
-        groupBox_2->setTitle(QApplication::translate("PowerGroupPage", "ESC Calibration", 0));
+        label_3->setText(QApplication::translate("PowerGroupPage", "\344\275\216\345\216\213 (per cell) ", 0));
+        groupBox_2->setTitle(QApplication::translate("PowerGroupPage", "\347\224\265\350\260\203\346\240\241\345\207\206", 0));
         label_escText2->setText(QString());
         label_escText1->setText(QString());
-        pushButton_calibrateESC->setText(QApplication::translate("PowerGroupPage", "Calibrate", 0));
+        pushButton_calibrateESC->setText(QApplication::translate("PowerGroupPage", "\346\240\241\345\207\206", 0));
     } // retranslateUi
 
 };

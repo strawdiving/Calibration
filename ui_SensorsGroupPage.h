@@ -30,7 +30,7 @@ class Ui_SensorsGroupPage
 public:
     QGridLayout *gridLayout;
     QStackedWidget *stackedWidget_Orientations;
-    QWidget *page;
+    QWidget *nullWidget;
     QHBoxLayout *horizontalLayout;
     QLabel *label_2;
     QPushButton *pushButton_Compass;
@@ -57,9 +57,9 @@ public:
         gridLayout->setVerticalSpacing(10);
         stackedWidget_Orientations = new QStackedWidget(SensorsGroupPage);
         stackedWidget_Orientations->setObjectName(QStringLiteral("stackedWidget_Orientations"));
-        page = new QWidget();
-        page->setObjectName(QStringLiteral("page"));
-        stackedWidget_Orientations->addWidget(page);
+        nullWidget = new QWidget();
+        nullWidget->setObjectName(QStringLiteral("nullWidget"));
+        stackedWidget_Orientations->addWidget(nullWidget);
 
         gridLayout->addWidget(stackedWidget_Orientations, 4, 0, 1, 1);
 
@@ -175,13 +175,13 @@ public:
     {
         SensorsGroupPage->setWindowTitle(QApplication::translate("SensorsGroupPage", "Form", 0));
         label_2->setText(QApplication::translate("SensorsGroupPage", "\346\240\241\345\207\206\357\274\232", 0));
-        pushButton_Compass->setText(QApplication::translate("SensorsGroupPage", "Compass", 0));
-        pushButton_Gyro->setText(QApplication::translate("SensorsGroupPage", "Gyro", 0));
-        pushButton_Accel->setText(QApplication::translate("SensorsGroupPage", "Accel", 0));
+        pushButton_Compass->setText(QApplication::translate("SensorsGroupPage", "\347\275\227\347\233\230", 0));
+        pushButton_Gyro->setText(QApplication::translate("SensorsGroupPage", "\351\231\200\350\236\272\344\273\252", 0));
+        pushButton_Accel->setText(QApplication::translate("SensorsGroupPage", "\345\212\240\351\200\237\345\272\246\350\256\241", 0));
         pushButton_Level->setText(QApplication::translate("SensorsGroupPage", "Level", 0));
-        pushButton_Cancel->setText(QApplication::translate("SensorsGroupPage", "Cancel", 0));
-        label->setText(QApplication::translate("SensorsGroupPage", "Sensors Config", 0));
-        label_StatusText->setText(QApplication::translate("SensorsGroupPage", "Start the individual calibration steps by clicking one of the buttons above.", 0));
+        pushButton_Cancel->setText(QApplication::translate("SensorsGroupPage", "\345\217\226\346\266\210", 0));
+        label->setText(QApplication::translate("SensorsGroupPage", "\351\201\245\346\216\247\345\231\250\346\240\241\345\207\206", 0));
+        label_StatusText->setText(QApplication::translate("SensorsGroupPage", "\351\200\211\346\213\251\344\270\212\351\235\242\347\232\204\346\214\211\351\222\256\357\274\214\345\274\200\345\247\213\346\240\241\345\207\206", 0));
     } // retranslateUi
 
 };

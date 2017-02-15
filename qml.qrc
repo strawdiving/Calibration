@@ -36,6 +36,28 @@
         <file>qmlImages/VehicleRightRotate.png</file>
         <file>qmlImages/VehicleTailDownRotate.png</file>
         <file>qmlImages/VehicleUpsideDownRotate.png</file>
+        <file>qmlImages/mode1/radioCenter.png</file>
+        <file>qmlImages/mode1/radioHome.png</file>
+        <file>qmlImages/mode1/radioPitchDown.png</file>
+        <file>qmlImages/mode1/radioPitchUp.png</file>
+        <file>qmlImages/mode1/radioRollLeft.png</file>
+        <file>qmlImages/mode1/radioRollRight.png</file>
+        <file>qmlImages/mode1/radioSwitchMinMax.png</file>
+        <file>qmlImages/mode1/radioThrottleDown.png</file>
+        <file>qmlImages/mode1/radioThrottleUp.png</file>
+        <file>qmlImages/mode1/radioYawLeft.png</file>
+        <file>qmlImages/mode1/radioYawRight.png</file>
+        <file>qmlImages/mode2/radioCenter.png</file>
+        <file>qmlImages/mode2/radioHome.png</file>
+        <file>qmlImages/mode2/radioPitchDown.png</file>
+        <file>qmlImages/mode2/radioPitchUp.png</file>
+        <file>qmlImages/mode2/radioRollLeft.png</file>
+        <file>qmlImages/mode2/radioRollRight.png</file>
+        <file>qmlImages/mode2/radioSwitchMinMax.png</file>
+        <file>qmlImages/mode2/radioThrottleDown.png</file>
+        <file>qmlImages/mode2/radioThrottleUp.png</file>
+        <file>qmlImages/mode2/radioYawLeft.png</file>
+        <file>qmlImages/mode2/radioYawRight.png</file>
     </qresource>
     <qresource prefix="/"/>
 </RCC>

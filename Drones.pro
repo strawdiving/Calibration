@@ -71,7 +71,12 @@ SOURCES += main.cpp\
     SetupWizard/SummaryViewPage.cpp \
     SetupWizard/SensorsGroupPage.cpp \
     SetupWizard/CalRotationWidget.cpp \
-    SetupWizard/OrientationWidget.cpp
+    SetupWizard/OrientationWidget.cpp \
+    SetupWizard/RadioPage.cpp \
+    PX4AutopioltPlugins/RadioComponentController.cpp \
+    SetupWizard/FlightModesPage.cpp \
+    SetupWizard/FlightModeWidget.cpp \
+    PX4AutopioltPlugins/FlightModesComponentController.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -117,16 +122,23 @@ HEADERS  += mainwindow.h \
     SetupWizard/SummaryViewPage.h \
     SetupWizard/SensorsGroupPage.h \
     SetupWizard/CalRotationWidget.h \
-    SetupWizard/OrientationWidget.h
+    SetupWizard/OrientationWidget.h \
+    SetupWizard/RadioPage.h \
+    PX4AutopioltPlugins/RadioComponentController.h \
+    SetupWizard/FlightModesPage.h \
+    SetupWizard/FlightModeWidget.h \
+    PX4AutopioltPlugins/FlightModesComponentController.h
 
 FORMS    += mainwindow.ui \
     SetupWidget.ui \
     PowerGroupPage.ui \
     SetupWizard/SummaryViewPage.ui \
     SetupWizard/SensorsGroupPage.ui \
-    SetupWizard/CalRotationWidget.ui
+    SetupWizard/CalRotationWidget.ui \
+    SetupWizard/RadioPage.ui \
+    SetupWizard/FlightModeWidget.ui
 
-UI_DIR  += E:\baseModule-12.1
+UI_DIR  += E:\baseModule-12.27
 
 RESOURCES += \
     attitude.qrc \

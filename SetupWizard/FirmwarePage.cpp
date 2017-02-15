@@ -196,6 +196,7 @@ void FirmwarePage::_downloadProgress(qint64 curr, qint64 total)
         _progressBar->setProperty("value", (float)curr*100 / (float)total);
     }
 }
+
 void FirmwarePage::_foundBoard(bool firstAttempt, const QString portname, QString portDescription)
 {
     if(firstAttempt){
@@ -238,7 +239,7 @@ void FirmwarePage::_eraseStarted()
 void FirmwarePage::_eraseProgress()
 {
   _eraseCount++;
-  qDebug()<<_eraseCount;
+  //qDebug()<<_eraseCount;
   _progressBar->setProperty("value",(float)(_eraseTime*_eraseCount)*100 / (float)_eraseTotalTime);
 }
 

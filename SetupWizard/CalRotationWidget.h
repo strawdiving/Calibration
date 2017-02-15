@@ -19,7 +19,7 @@ public:
 public slots:
     void _status(QString message);
     void _calStatusChanged(QString side,bool inProgress,bool rotate,bool done);
-    void _calVisibleChanged(QString side);
+    void _sidesVisibleChanged(int sidesVisible);
 
 signals:
     void calVisibleChanged(void);

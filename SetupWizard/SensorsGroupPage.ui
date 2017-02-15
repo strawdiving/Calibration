@@ -19,7 +19,7 @@
    </property>
    <item row="4" column="0">
     <widget class="QStackedWidget" name="stackedWidget_Orientations">
-     <widget class="QWidget" name="page"/>
+     <widget class="QWidget" name="nullWidget"/>
     </widget>
    </item>
    <item row="1" column="0">
@@ -46,7 +46,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Compass</string>
+        <string>罗盘</string>
        </property>
       </widget>
      </item>
@@ -72,7 +72,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Gyro</string>
+        <string>陀螺仪</string>
        </property>
       </widget>
      </item>
@@ -98,7 +98,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Accel</string>
+        <string>加速度计</string>
        </property>
       </widget>
      </item>
@@ -150,7 +150,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Cancel</string>
+        <string>取消</string>
        </property>
       </widget>
      </item>
@@ -184,7 +184,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Sensors Config</string>
+      <string>遥控器校准</string>
      </property>
     </widget>
    </item>
@@ -210,7 +210,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Start the individual calibration steps by clicking one of the buttons above.</string>
+      <string>选择上面的按钮，开始校准</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

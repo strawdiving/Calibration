@@ -5,6 +5,8 @@
 #include <QDebug>
 #include <QMessageBox>
 
+const QStringList SensorsGroupPage::_sidesList = {"down" ,"up" , "left" , "right" , "front", "back"};
+
 SensorsGroupPage::SensorsGroupPage(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SensorsGroupPage),
@@ -21,35 +23,18 @@ SensorsGroupPage::SensorsGroupPage(QWidget *parent) :
     _calNoseDownVisible(false),
     _calTailDownVisible(false),
 
-    _calDownSideInProgress(false),
-    _calUpsideDownInProgress(false),
-    _calLeftSideInProgress(false),
-    _calRightSideInProgress(false),
-    _calNoseDownInProgress(false),
-    _calTailDownInProgress(false),
-
-    _calDownSideRotate(false),
-    _calUpsideDownRotate(false),
-    _calLeftSideRotate(false),
-    _calRightSideRotate(false),
-    _calNoseDownRotate(false),
-    _calTailDownRotate(false),
-
-    _calDownSideDone(false),
-    _calUpsideDownDone(false),
-    _calLeftSideDone(false),
-    _calRightSideDone(false),
-    _calNoseDownDone(false),
-    _calTailDownDone(false),
-
-    _waitingForCancel(false)
+    _waitingForCancel(false),
+    _calInProgress(false),
+    _calRotate(false),
+    _calDone(false),
+    _allSidesDone(false),
+    _sidesVisible(0)
 {
     ui->setupUi(this);
     ui->label_StatusText->setText(statusTextDefault);
     _calOrientationWidget = new CalRotationWidget;
     ui->stackedWidget_Orientations->addWidget(_calOrientationWidget);
 
-    //connect(this,&SensorsGroupPage::statusChanged,_calRotationWidget,&CalRotationWidget::_);
     connect(this,&SensorsGroupPage::status,_calOrientationWidget,&CalRotationWidget::_status);
     connect(this,&SensorsGroupPage::calStatusChanged,_calOrientationWidget,&CalRotationWidget::_calStatusChanged);
 }
@@ -71,11 +56,12 @@ void SensorsGroupPage::initSensorsController()
     connect(_sensorsController,&SensorsComponentController::handleUASTextMessage,this,&SensorsGroupPage::_handleUASTextMessage);
     connect(this,&SensorsGroupPage::cancelCalibration,_sensorsController,&SensorsComponentController::_cancelCalibration);
     connect(this,&SensorsGroupPage::stopCalibration,_sensorsController,&SensorsComponentController::_stopCalibration);
+    connect(this,&SensorsGroupPage::sidesVisibleChanged,_calOrientationWidget,&CalRotationWidget::_sidesVisibleChanged);
 }
 
 void SensorsGroupPage::_handleUASTextMessage(QString text)
 {    
-    qDebug()<<text;
+    //qDebug()<<text;
     if(text.contains("progress <")) {
         QString p = text.split('<').last().split('>').first();
         bool ok = false;
@@ -105,44 +91,38 @@ void SensorsGroupPage::_handleUASTextMessage(QString text)
             qDebug()<<"Unsupported calibration firmware version";
             return;
         }
-        _startVisualCalibration(true,false);
+
+        _startVisualCalibration();
 
         text = parts[1];
         if(text == "accel" || text == "mag" || text == "gyro") {
-            _startVisualCalibration(false,false);
+
+            //All red ,"Incompleted"
+            _calInProgress = false;
+            _calDone = false;
+            _sidesVisible = 0;
+
+            for(int i = 0; i < _sidesList.count();i++) {
+                emit calStatusChanged(_sidesList.at(i),_calInProgress,_calRotate,_calDone);
+            }
             emit status(calStartedText);
 
             if(text == "accel") {
-                _accelCalInProgress = true;
-                _startVisualCalibration(false,true);
+                _accelCalInProgress = true;              
+                _sidesVisible = 63;  // 111111 == 63
             }
             else if(text == "gyro") {
-                _gyroCalInProgress = true;
-                _calDownSideVisible = true;
-
+                _gyroCalInProgress = true;                
+                _sidesVisible = 32;//downSide Visible,100000
             }
             else if (text == "mag") {
                 _magCalInProgress = true;
-                int sides = _sensorsController->getMagCalSides();
-                if(sides) {
-                    _calTailDownVisible = ((sides & (1<<0)) >0);
-                    _calNoseDownVisible = ((sides & (1<<1)) >0);
-                    _calLeftSideVisible = ((sides & (1<<2)) >0);
-                    _calRightSideVisible = ((sides & (1<<3)) >0);
-                    _calUpsideDownVisible = ((sides & (1<<4)) >0);
-                    _calDownSideVisible = ((sides & (1<<5)) >0);
-                }
+                _sidesVisible = _sensorsController->getMagCalSides();
             }
             else {
                 Q_ASSERT(false);
             }
-            //emit xxxSidesxxxChanged signals
-
-            //emit calInProgressChanged();
-            //emit calRotateChanged();
-           // emit calDoneChanged();
-
-            ui->stackedWidget_Orientations->setCurrentWidget(_calOrientationWidget);
+            _setVisualState(_sidesVisible);//set relevant sides visible
         }
         return;
     }
@@ -194,6 +174,7 @@ void SensorsGroupPage::_handleUASTextMessage(QString text)
         _stopCalibration(_waitingForCancel? StopCalibrationCancelled : StopCalibrationFailed);
         return;
     }
+
     if(text.startsWith("calibration failed")) {
         _stopCalibration(StopCalibrationFailed);
         return;
@@ -202,25 +183,23 @@ void SensorsGroupPage::_handleUASTextMessage(QString text)
 
 void SensorsGroupPage::_stopCalibration(StopCalibrationCode code)
 {
+    //disconnect UAS::textMessageReceived and this::_handleTextMessage
+    emit stopCalibration();
+
     ui->pushButton_Accel->setEnabled(true);
     ui->pushButton_Compass->setEnabled(true);
     ui->pushButton_Gyro->setEnabled(true);
     ui->pushButton_Level->setEnabled(true);
     ui->pushButton_Cancel->setEnabled(false);
 
-    //disconnect UAS::textMessageReceived and this::_handleTextMessage
-    emit stopCalibration();
-
     if(code == StopCalibrationSuccess) {
-        _resetVisualState(true,true);
+        _resetVisualState();
         ui->progressBar_CalProgress->setProperty("value",100);
     } else {
         ui->progressBar_CalProgress->setProperty("value",0);
     }
 
-    if(!_waitingForCancel) {
-        //emit xxxsidesxxxChanged signals
-    }
+    _waitingForCancel = false;
 
     if(code == StopCalibrationSuccess) {
         emit status("Calibration complete.");
@@ -228,7 +207,7 @@ void SensorsGroupPage::_stopCalibration(StopCalibrationCode code)
 
     } else if(code == StopCalibrationCancelled || code == StopCalibrationFailed) {
         ui->label_StatusText->setText(statusTextDefault);
-        ui->stackedWidget_Orientations->setCurrentWidget(_calOrientationWidget);
+        ui->stackedWidget_Orientations->setCurrentWidget(ui->nullWidget);
         if(code == StopCalibrationFailed) {
             //qgcApp: showMessage "Calibration failed"
             ui->label_StatusText->setVisible(true);
@@ -236,9 +215,12 @@ void SensorsGroupPage::_stopCalibration(StopCalibrationCode code)
             ui->label_StatusText->setText("Calibration failed.");
         }
     }
+    _magCalInProgress = false;
+    _accelCalInProgress = false;
+    _gyroCalInProgress = false;
 }
 
-void SensorsGroupPage::_startVisualCalibration(bool done,bool visible)
+void SensorsGroupPage::_startVisualCalibration()
 {
     ui->pushButton_Accel->setEnabled(false);
     ui->pushButton_Level->setEnabled(false);
@@ -252,18 +234,29 @@ void SensorsGroupPage::_startVisualCalibration(bool done,bool visible)
 
     ///void _resetVisualState(done,inProgress,visible)
     ////// \param Done
-    ////// \param inProgress
     ////// \param visible
-    _resetVisualState(done,visible);
+    _resetVisualState();
 }
 
-void SensorsGroupPage::_resetVisualState(bool done,bool visible)
+//Fix me: is this necessary?
+void SensorsGroupPage::_resetVisualState()
 {
-    if(visible) {
-        ui->stackedWidget_Orientations->setCurrentWidget(_calOrientationWidget);
-    }
+    //All green ,"Completed"
+    _calInProgress = false;
+     _calRotate = false;
+     _calDone = true;
+     for(int i = 0; i < _sidesList.count();i++) {
+         emit calStatusChanged(_sidesList.at(i),_calInProgress,_calRotate,_calDone);
+     }
 }
 
+void SensorsGroupPage::_setVisualState(int sidesVisible)
+{
+    if(sidesVisible!=0) {
+       ui->stackedWidget_Orientations->setCurrentWidget(_calOrientationWidget);
+   }
+   emit sidesVisibleChanged(sidesVisible);
+}
 
 void SensorsGroupPage::_calibrate()
 {
@@ -295,6 +288,7 @@ void SensorsGroupPage::on_pushButton_Cancel_clicked()
     // The firmware doesn't allow us to cancel calibration. The best we can do is wait
     // for it to timeout.
     _waitingForCancel = true;
+
     QMessageBox::information(this,"Calibration Cancel","Waiting for Vehicle to response to Cancel. "
                                                        "This may take a few seconds.",QMessageBox::Ok);
 
