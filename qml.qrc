@@ -55,7 +55,6 @@
         <file>qmlImages/mode2/radioRollRight.png</file>
         <file>qmlImages/mode2/radioSwitchMinMax.png</file>
         <file>qmlImages/mode2/radioThrottleDown.png</file>
-        <file>qmlImages/mode2/radioThrottleUp.png</file>
         <file>qmlImages/mode2/radioYawLeft.png</file>
         <file>qmlImages/mode2/radioYawRight.png</file>
     </qresource>
