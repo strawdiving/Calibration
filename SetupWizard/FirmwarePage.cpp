@@ -43,6 +43,7 @@ FirmwarePage::~FirmwarePage()
 {
 }
 
+/// download and upgrade firmware
 void FirmwarePage::_flash()
 {
  qDebug()<<"update firmware:flash";
@@ -85,6 +86,7 @@ void FirmwarePage::_downloadFirmware()
     connect(_networkReply,SIGNAL(error(QNetworkReply::NetworkError)),this, SLOT(_downloadError(QNetworkReply::NetworkError)));
 }
 
+/// handle the downloaded firmware file
 void FirmwarePage::_downloadFinished(void)
 {
  _appendStatus("Download complete.");
@@ -129,6 +131,8 @@ void FirmwarePage::_downloadFinished(void)
          _error(QString("Image size of is too large"));
          return;
      }
+
+     // call PX4FirmUpgradeThreadController to write image file into board
      _controller->flash(_image);
    }
  else{
@@ -137,7 +141,7 @@ void FirmwarePage::_downloadFinished(void)
  }
 }
 
-
+/// handle download errors
 void FirmwarePage::_downloadError(QNetworkReply::NetworkError code)
 {
     QString errorMsg;
@@ -181,6 +185,7 @@ void FirmwarePage::_errorCancel(QString errorString)
     _appendStatus(errorString);
 }
 
+/// show upgrage progress
 void FirmwarePage::_updateProgress(int curr, int total)
 {
     // Take care of cases where 0 / 0 is emitted as error return value
@@ -189,6 +194,7 @@ void FirmwarePage::_updateProgress(int curr, int total)
     }
 }
 
+/// show download progress of firmware file
 void FirmwarePage::_downloadProgress(qint64 curr, qint64 total)
 {
     // Take care of cases where 0 / 0 is emitted as error return value
@@ -218,6 +224,7 @@ void FirmwarePage::_boardGone(void)
     _status(plugText,true);
 }
 
+/// save the board info for downloading the correct firmware file
 void FirmwarePage::_foundBootloader(int bootloaderVersion,int boardID,int flashSize)
 {
     _status(QString("bootloaderVersion : %1").arg(bootloaderVersion),false);

@@ -10,6 +10,7 @@ Bootloader::~Bootloader()
 
 }
 
+/// open the serial port
  bool Bootloader::open(QextSerialPort *port, const QString portName)
  {
     port->setPortName(portName);
@@ -27,6 +28,8 @@ Bootloader::~Bootloader()
     return true;
  }
 
+ ///Read a PROTO_GET_SYNC response from the bootloader
+ ///  @return true: Valid sync response (OK response) was received
  bool Bootloader::sync(QextSerialPort* port)
  {
      if (_sendCommand(port, PROTO_GET_SYNC)) {
@@ -37,6 +40,8 @@ Bootloader::~Bootloader()
      }
  }
 
+ /// Write command to the port.
+ /// @return true: get valid command response in the given time.
  bool Bootloader::_sendCommand(QextSerialPort* port, const uint8_t cmd, int responseTimeout)
  {
      uint8_t buf[2] = { cmd, PROTO_EOC };
@@ -56,6 +61,7 @@ Bootloader::~Bootloader()
      return false;
  }
 
+ /// Write data (less than maxSize) to the port
  bool Bootloader::_write(QextSerialPort* port, const uint8_t* data, qint64 maxSize)
  {
      qint64 bytesWritten = port->write((const char*)data, maxSize);
@@ -72,6 +78,7 @@ Bootloader::~Bootloader()
      return true;
  }
 
+ /// Write one byte to the port
  bool Bootloader::_write(QextSerialPort* port, const uint8_t byte)
  {
      uint8_t buf[1] = { byte };
@@ -80,6 +87,7 @@ Bootloader::~Bootloader()
 
  /// Read a PROTO_SYNC command response from the bootloader
  ///     @param responseTimeout Msecs to wait for response bytes to become available on port
+ ///     @return  true when get valid command response in the given time
  bool Bootloader::_getCommandResponse(QextSerialPort* port, int responseTimeout)
  {
      uint8_t response[2];
@@ -106,6 +114,11 @@ Bootloader::~Bootloader()
      return true;
  }
 
+ /// Read data( less than maxSize) from the port within the given time
+ ///     @param port Port to read from
+ ///     @param data Returned data
+ ///     @param maxSize Max size of data
+ ///     @param readTimeout Time for bytes to be available
  bool Bootloader::_read(QextSerialPort* port, uint8_t* data, qint64 maxSize, int readTimeout)
  {
      qint64 bytesAlreadyRead = 0;
@@ -136,7 +149,7 @@ Bootloader::~Bootloader()
      return true;
  }
 
- /// Send a PROTO_GET_DEVICE command to retrieve a value from the PX4 bootloader
+ /// Send a PROTO_GET_DEVICE(0x22) command to retrieve a value from the PX4 bootloader
  ///     @param param Value to retrieve using INFO_BOARD_* enums
  ///     @param value Returned value
  bool Bootloader::_getPX4BoardInfo(QextSerialPort* port, uint8_t param, uint32_t& value)
@@ -147,6 +160,7 @@ Bootloader::~Bootloader()
          goto Error;
      }
      port->flush();
+     // read response data from the port
      if (!_read(port, (uint8_t*)&value, sizeof(value))) {
          goto Error;
      }
@@ -161,9 +175,10 @@ Bootloader::~Bootloader()
      return false;
  }
 
+ /// Retrieve a set of board info from the bootloader of PX4 FMU and PX4 Flow boards
  bool Bootloader::getPX4BoardInfo(QextSerialPort* port, uint32_t& bootloaderVersion, uint32_t& boardID, uint32_t& flashSize)
  {
-
+    // get bootloader protocol revision , command: 0x22 0x01 0x20
      if (!_getPX4BoardInfo(port, INFO_BL_REV, _bootloaderVersion)) {
          goto Error;
      }
@@ -172,10 +187,12 @@ Bootloader::~Bootloader()
          goto Error;
      }
 
+     // get board ID info ,  command: 0x22 0x02 0x20
      if (!_getPX4BoardInfo(port, INFO_BOARD_ID, _boardID)) {
          goto Error;
      }
 
+     // get size of flashable area , command: 0x22 0x04 0x20
      if (!_getPX4BoardInfo(port, INFO_FLASH_SIZE, _boardFlashSize)) {
          qWarning() << _errorString;
          goto Error;
@@ -192,6 +209,8 @@ Bootloader::~Bootloader()
      return false;
  }
 
+ /// Send a PROTO_CHIP_ERASE command to the port
+ /// @return true: valid erase response was received
  bool Bootloader::erase(QextSerialPort* port)
  {
      if(!_sendCommand(port,PROTO_CHIP_ERASE,_eraseTimeout))
@@ -202,6 +221,8 @@ Bootloader::~Bootloader()
      return true;
  }
 
+ /// write bytes at program address and increment, calculate the CRC of the image file.
+ /// @return true: correct number of bytes written to the port
  bool Bootloader::program(QextSerialPort* port, FirmwareImage* image)
  {
       QFile firmwareFile(image->binFilename());
@@ -236,6 +257,7 @@ Bootloader::~Bootloader()
          Q_ASSERT(bytesToSend <= 0x8F);
 
           bool failed = true;
+          // write bytes at program address and increment
           if(_write(port,PROTO_PROG_MULTI)){
               if(_write(port, (uint8_t)bytesToSend)){
                   if(_write(port,imageBuff,bytesToSend)){
@@ -270,6 +292,8 @@ Bootloader::~Bootloader()
       return true;
  }
 
+ /// Read a PROTO_GET_CRC response from the bootloader
+ /// @return true: Valid CRC response was received from the bootloader and matched the CRC of the image file
  bool Bootloader::verify(QextSerialPort* port, FirmwareImage* image)
  {
      Q_UNUSED(image)
@@ -301,6 +325,7 @@ Bootloader::~Bootloader()
      return ret;
  }
 
+ /// Write PROTO_BOOT to the port
  bool Bootloader::reboot(QextSerialPort* port)
  {
      return _write(port, PROTO_BOOT) && _write(port, PROTO_EOC);

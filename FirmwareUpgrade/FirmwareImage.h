@@ -1,6 +1,10 @@
 #ifndef FIRMWAREIMAGE_H
 #define FIRMWAREIMAGE_H
 
+/**
+ *  load  and parse the firmware(.ihx, .px4, .bin)
+ **/
+
 #include <QObject>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -30,8 +34,8 @@ private:
                               const QString&		bytesKey,
                               QByteArray&			decompressedBytes);
 
-    uint32_t _imageSize;
-    QString _binFilename;
+    uint32_t _imageSize;  /// size of image file
+    QString _binFilename; /// name of file to store decompressed image file
     static const char* _boardIdKey;
     static const char* _imageSizeKey;
     static const char* _imageKey;

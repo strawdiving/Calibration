@@ -1,6 +1,11 @@
 #ifndef BOOTLOADER_H
 #define BOOTLOADER_H
 
+/**
+ * Communicate with board via serialport , to read and write, receiving and sending commands
+ *
+**/
+
 #include <QObject>
 #include <QSerialPort>
 #include <QtDebug>
@@ -17,7 +22,11 @@ class Bootloader : public QObject
 public:
     explicit Bootloader(QObject *parent = 0);
     ~Bootloader();
+
+    /// Open the port
     bool open(QextSerialPort* port, const QString portName);
+
+    /// Called by PX4FirmwareUpgradeThread to show error info
     QString errorString() {return _errorString;}
 
     /// @brief Read a PROTO_SYNC response from the bootloader
@@ -36,6 +45,7 @@ public:
     bool getPX4BoardInfo(QextSerialPort* port, uint32_t& bootloaderVersion, uint32_t& boardID, uint32_t& flashSize);
 
 signals:
+    /// Signals sent to PX4FirmUpgradeThreadController
     void updateProgress(int curr, int total);
 
 public slots:

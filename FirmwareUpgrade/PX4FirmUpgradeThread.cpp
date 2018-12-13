@@ -15,6 +15,7 @@ PX4FirmUpgradeThreadWorker::~PX4FirmUpgradeThreadWorker()
 
 }
 
+/// Set singleshot timer for searching for board once
 void PX4FirmUpgradeThreadWorker::_init()
 {
     _timerRetry = new QTimer(this);
@@ -24,6 +25,7 @@ void PX4FirmUpgradeThreadWorker::_init()
     connect(_timerRetry,SIGNAL(timeout()),this,SLOT(_findBoardOnce()));
 }
 
+/// First time to find board
 void PX4FirmUpgradeThreadWorker::_startFindBoard()
 {
     //qDebug()<<"worker:startFindBoard()";
@@ -64,6 +66,7 @@ void PX4FirmUpgradeThreadWorker::_findBoardOnce()
     _timerRetry->start();
     }
 
+/// Traverse all available ports to find the board
 bool PX4FirmUpgradeThreadWorker::_findBoardFromPorts()
 {
     foreach(QSerialPortInfo info,QSerialPortInfo::availablePorts())
@@ -81,6 +84,7 @@ bool PX4FirmUpgradeThreadWorker::_findBoardFromPorts()
 return false;
 }
 
+/// get PX4 Board Info
 bool PX4FirmUpgradeThreadWorker::_findBootloader(const QString portname)
 {
     qDebug()<<"_findBootloader:"<<portname;
@@ -126,6 +130,7 @@ bool PX4FirmUpgradeThreadWorker::_findBootloader(const QString portname)
     return false;
 }
 
+/// call FirmwareImage to erase, program and verify firmware image
 void PX4FirmUpgradeThreadWorker::_flash(FirmwareImage* image)
 {
     if(_erase())

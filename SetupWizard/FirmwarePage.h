@@ -42,26 +42,33 @@ public slots:
     void _downloadError(QNetworkReply::NetworkError code);
 
     void _flash(void);
+     void _flashCompleted(void);
+
+    /// using erase timer to calculate and show erase progress
     void _eraseStarted(void);
     void _eraseProgress(void);
-    void _eraseCompleted(void);
-    void _flashCompleted(void);
+    void _eraseCompleted(void);   
 
 private slots:
 
 private:
+    /// show status info
     void _status(const QString& statusString, bool critical);
+    /// show status info with different style
     void _appendStatus(const QString& text, bool critical = false);
+    /// show error info
     void _errorCancel(QString errorString);
+    /// get firmware file name and download the firmware file
     void _getFimwareFile();
+    /// download firmware file through network
     void _downloadFirmware();
 
     PX4FirmUpgradeThreadController* _controller;
 
-    QTextBrowser* _statusTextArea;
-    QProgressBar* _progressBar;
-    QPushButton* _updateBtn;
-    TitleLabel* _title;
+    QTextBrowser* _statusTextArea; /// area to show upgrade status
+    QProgressBar* _progressBar;   /// progressbar to show upgrade progress
+    QPushButton* _updateBtn;  /// button to write start firmware upgrade
+    TitleLabel* _title;   /// label to show the title
 
     const QString plugText = "Plugin your device via USB to start firmware upgrade";
     const QString plugText1 = "All connections to vehicles must be disconnected"
@@ -71,17 +78,17 @@ private:
     uint32_t _bootloaderVersion;
     uint32_t _bootloaderBoardID;
     uint32_t _bootloaderBoardFlashSize;
-    QString _firmwareFilename; //Image which we are going to flash to the board
+    QString _firmwareFilename; /// Image which we are going to flash to the board
 
-    QNetworkAccessManager* _networkManager;
+    QNetworkAccessManager* _networkManager; /// interfce to download files from the network
     QNetworkReply* _networkReply;
 
-    FirmwareImage* _image;
+    FirmwareImage* _image;  /// interface to handle the image file
 
-    QTimer _eraseTimer;
-    static const int _eraseTotalTime = 7500;//estimated erase time,before: 15000
-    static const int _eraseTime = 250;//before: 500
-    int _eraseCount;
+    QTimer _eraseTimer; /// timer for erase
+    static const int _eraseTotalTime = 7500; ///estimated erase time,before: 15000
+    static const int _eraseTime = 250; /// interval for erase timer
+    int _eraseCount; /// number of erase timer starts
 };
 
 #endif // FIRMWAREPAGE_H

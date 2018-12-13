@@ -24,6 +24,9 @@ FirmwareImage::~FirmwareImage()
 {
 }
 
+/// load the image file
+/// @param image Filename Image file to load
+/// @param boardId Board to load image file to
 bool FirmwareImage::load(const QString &imageFilename, uint32_t boardId)
 {
     QFile px4File(imageFilename);
@@ -157,9 +160,14 @@ bool FirmwareImage::load(const QString &imageFilename, uint32_t boardId)
 }
 
 /// Decompress a set of bytes stored in a Json document.
+/// @param jsonObject  JSON object
+/// @param jsonDocBytes Raw bytes of JSON document
+/// @param sizeKey key which holds byte size
+/// @param bytesKey key which holds compressed bytes
+/// @param decompressedBytes Returned decompressed bytes
 bool FirmwareImage::_decompressJsonValue(const QJsonObject&	jsonObject,const QByteArray&	jsonDocBytes,
                                     const QString&		sizeKey,
-                                    const QString&		bytesKey,
+                                    const QString&		,
                                     QByteArray&		decompressedBytes)
 {
 // Validate decompressed size key
