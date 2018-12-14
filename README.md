@@ -30,15 +30,15 @@ Calibration base module of ground control station(GCS) for PX4 FMUv2/ Pixhawk fl
 
 **固件更新示意图**
 
-![固件更新示意图](https://github.com/strawdiving/Calibration/tree/master/ReadmeImages/firmware example.png)
+![固件更新示意图](https://github.com/strawdiving/Calibration/blob/master/ReadmeImages/firmware%20example.png)
 
 **固件更新主流程**
 
-![固件更新主流程](https://github.com/strawdiving/Calibration/tree/master/ReadmeImages/upgrade flow.png)
+![固件更新主流程](https://github.com/strawdiving/Calibration/blob/master/ReadmeImages/upgrade%20flow.png)
 
 **_startFindBoard的流程**
 
-![_startFindBoard流程图](https://github.com/strawdiving/Calibration/tree/master/ReadmeImages/_startFindBoard.png)
+![_startFindBoard流程图](https://github.com/strawdiving/Calibration/blob/master/ReadmeImages/_startFindBoard.png)
 
 ### Bootloader
 
@@ -107,7 +107,7 @@ Calibration base module of ground control station(GCS) for PX4 FMUv2/ Pixhawk fl
 | image                                                        | string |          |
 | image_size                                                   | double | required |
 | mav_autopilot                                                | double | required |
-| build_time, summary, version, image_maxsize, git_identity, board_revision, magic, description |        |          |
+| build_time, summary, version, image_maxsize, git_identity, board_revision, magic, description |
 
 其中board_id，image_size，image是firmware文件必需的key。
 
