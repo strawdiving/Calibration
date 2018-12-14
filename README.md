@@ -30,15 +30,15 @@ Calibration base module of ground control station(GCS) for PX4 FMUv2/ Pixhawk fl
 
 **固件更新示意图**
 
-![固件更新示意图](C:\Users\wurenji.ZKXS\AppData\Roaming\Typora\typora-user-images\1544599498797.png)
+![固件更新示意图](https://github.com/strawdiving/Calibration/tree/master/ReadmeImages/firmware example.png)
 
 **固件更新主流程**
 
-![固件更新主流程](C:\Users\wurenji.ZKXS\AppData\Roaming\Typora\typora-user-images\1544672636046.png)
+![固件更新主流程](https://github.com/strawdiving/Calibration/tree/master/ReadmeImages/upgrade flow.png)
 
 **_startFindBoard的流程**
 
-![_startFindBoard流程图](C:\Users\wurenji.ZKXS\AppData\Roaming\Typora\typora-user-images\1544671445431.png)
+![_startFindBoard流程图](https://github.com/strawdiving/Calibration/tree/master/ReadmeImages/_startFindBoard.png)
 
 ### Bootloader
 
