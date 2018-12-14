@@ -55,6 +55,8 @@ bool FirmwareImage::load(const QString &imageFilename, uint32_t boardId)
     {
         if(!px4Json.contains(requiredKeys.at(i)))
         {
+            /// TO-DO: validate the type of requiredKeys
+
             qDebug()<<QString("Incorrectly formatted firmware file. No %1 key").arg(requiredKeys.at(i));
             return false;
         }
@@ -102,7 +104,6 @@ bool FirmwareImage::load(const QString &imageFilename, uint32_t boardId)
     }
 
         // Decompress the airframe xml and save to file
-
         success = _decompressJsonValue(px4Json, bytes, _airframeXmlSizeKey, _airframeXmlKey,decompressedBytes);
         if(success)
         {
@@ -167,7 +168,7 @@ bool FirmwareImage::load(const QString &imageFilename, uint32_t boardId)
 /// @param decompressedBytes Returned decompressed bytes
 bool FirmwareImage::_decompressJsonValue(const QJsonObject&	jsonObject,const QByteArray&	jsonDocBytes,
                                     const QString&		sizeKey,
-                                    const QString&		,
+                                    const QString&		bytesKey,
                                     QByteArray&		decompressedBytes)
 {
 // Validate decompressed size key

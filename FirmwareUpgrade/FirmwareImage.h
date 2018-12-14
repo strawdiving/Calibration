@@ -36,6 +36,8 @@ private:
 
     uint32_t _imageSize;  /// size of image file
     QString _binFilename; /// name of file to store decompressed image file
+
+    /// keys in firmware file
     static const char* _boardIdKey;
     static const char* _imageSizeKey;
     static const char* _imageKey;
